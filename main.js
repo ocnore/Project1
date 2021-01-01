@@ -1,6 +1,15 @@
 'use strict';
-const answer = +prompt('How much do you watch films');
 
+let answer;
+
+function start() {
+    answer = +prompt('How much do you watch films');
+    for (; answer == null || isNaN(answer) || answer == ``;) {
+        answer = +prompt('How much do you watch films');
+    }
+}
+
+start();
 
 const personalMovieDB = {
     count: answer,
@@ -10,37 +19,52 @@ const personalMovieDB = {
     privat: false
 };
 
-if (personalMovieDB.count == 2) {
-    alert (`too little`);
-}
-else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
-    alert (`you are classic`);
-}
-else if (personalMovieDB.count > 30) {
-    alert (`kinoman`);
-}
-else {
-    alert (`error`);
-}
 
-if (personalMovieDB.count > 0 && Number.isInteger(personalMovieDB.count)) {
+
+function rememberMyFilms () {
     for (let index = 0; index < answer; index++) {
-        let lastFilm;
-        for (let index = 0; index < 1;) {
-            lastFilm = prompt('What was last film you see?');
-            if (lastFilm == null) {
-                continue;}
-            else if (lastFilm,length < 50 && lastFilm.length > 0){
-                break;
-            }
-            
-        }        
-        let lastFilmRate = prompt('What rate is it?');
-        
-        personalMovieDB.movies[lastFilm] = lastFilmRate;       
+
+        const lastFilm = prompt('What was last film you see?');
+        const lastFilmRate = prompt('What rate is it?');
+    
+        if (lastFilm == null || lastFilm === `` || lastFilm.length > 50) {
+            index--;
+        }
+        personalMovieDB.movies[lastFilm] = lastFilmRate;
     }
 }
 
-console.log(personalMovieDB.movies);
+rememberMyFilms();
+
+function detectPersonalLevel () {
+    if (personalMovieDB.count < 10) {
+        alert(`too little`);
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
+        alert(`you are classic`);
+    } else if (personalMovieDB.count > 30) {
+        alert(`kinoman`);
+    } else {
+        alert(`error`);
+    }
+}
+
+detectPersonalLevel();
+
+function showMyBD () {
+    if (personalMovieDB.privat === false) {
+        console.log (personalMovieDB);
+    }
+}
+
+
+function writeYourGenres () {
+    personalMovieDB.geners = [];
+    for (let index = 0; index < 3; index++) {
+        personalMovieDB.geners.push(prompt (`What you favorit genre number ${index+1}`));   
+    }
+    console.log (personalMovieDB.geners);
+}
+
+
 
 
